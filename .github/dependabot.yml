@@ -1,32 +1,40 @@
+# .github/dependabot.yml
+# Configuration with auto-merge enabled
+
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 version: 2
 updates:
 
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
-    # Workflow files stored in the default location of `.github/workflows`. (You don't need to specify `/.github/workflows` for `directory`. You can use `directory: "/"`.)
+    # Workflow files stored in the default location of `.github/workflows`
     directory: "/"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
     allow:
-      # Allow both direct and indirect updates for all packages
+      # Allow direct updates
       - dependency-type: "direct"
     ignore:
-    - dependency-name: "*"
-      update-types: ["version-update:semver-patch"]
+      # Ignore patch updates for all dependencies
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+    # Enable auto-merge for GitHub Actions updates
+    rebase-strategy: auto
 
   # Maintain dependencies for pip
-  # poetry is not a valid entry for package-ecosystem
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "08:12"
     open-pull-requests-limit: 10
     allow:
-      # Allow both direct and indirect updates for all packages
+      # Allow direct updates
       - dependency-type: "direct"
     ignore:
-    - dependency-name: "*"
-      update-types: ["version-update:semver-patch"]
-
+      # Ignore patch updates for all dependencies
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+    # Enable auto-merge for pip updates
+    rebase-strategy: auto
